@@ -1,0 +1,22 @@
+<h1>Submit article</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'articles:index' %}" method="post">
+    {% csrf_token %}
+    <input type="url" name="article_url" id="url" value="" />
+        <label for="article_url">Article URL</label><br />
+    <input type="text" name="title" id="title" value="" />
+        <label for="title">Title</label><br />
+    <input type="submit" value="Create" />
+</form>
+
+{% if articles %}
+<ul>
+    {% for article in articles %}
+    <li><a href="{% url 'articles:detail' article.id %}">{{ article.article_url }}</a></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No articles are available.</p>
+{% endif %}
