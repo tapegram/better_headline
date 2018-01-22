@@ -1,15 +1,4 @@
-<h1>Submit article</h1>
-
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-<form action="{% url 'articles:index' %}" method="post">
-    {% csrf_token %}
-    <input type="url" name="article_url" id="url" value="" />
-        <label for="article_url">Article URL</label><br />
-    <input type="text" name="title" id="title" value="" />
-        <label for="title">Title</label><br />
-    <input type="submit" value="Create" />
-</form>
+<span><a href="{% url 'articles:create' %}">Submit Link</a></li></span>
 
 {% if articles %}
 <ul>
