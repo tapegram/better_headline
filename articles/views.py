@@ -1,7 +1,11 @@
+from django.shortcuts import get_object_or_404
 from django.views import generic
 from django.urls import reverse
 
-from .models import Article
+from .models import (
+    Article,
+    Comment,
+)
 
 
 class ArticleIndexView(generic.ListView):
@@ -29,4 +33,25 @@ class ArticleDetailView(generic.DetailView):
 
 
 class CommentCreateView(generic.CreateView):
-    pass
+    model = Comment
+    fields = ['text']
+    template_name = 'articles/comments/create.html'
+
+    def get_success_url(self):
+        return reverse('articles:article_detail',
+                       args=(self.object.article_id,))
+
+    def dispatch(self, request, *args, **kwargs):
+            """
+            Overridden so we can make sure the `Article` instance exists
+            before going any further.
+            """
+            self.article = get_object_or_404(Article, pk=kwargs['pk'])
+            return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        """
+        Overridden to add the Article relation to the `Comment` instance.
+        """
+        form.instance.article = self.article
+        return super().form_valid(form)

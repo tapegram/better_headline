@@ -1,6 +1,8 @@
 <h1>{{ article.title }}</h1>
 <h2>{{ article.article_url }}</h2>
 
+<span><a href="{% url 'articles:comment_create' article.id %}">Submit Link</a></li></span>
+
 <ul>
 {% for comment in article.comment_set.all %}
     <li>{{ comment.text }}</li>
