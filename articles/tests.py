@@ -10,7 +10,7 @@ class TestArticleIndex(TestCase):
         """
         If no articles exist, an appropriate message is displayed.
         """
-        response = self.client.get(reverse('articles:index'))
+        response = self.client.get(reverse('articles:article_index'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'No articles are available.')
         self.assertQuerysetEqual(response.context['articles'], [])
@@ -24,7 +24,7 @@ class TestArticleIndex(TestCase):
                           title="Test Article")
         article.save()
 
-        response = self.client.get(reverse('articles:index'))
+        response = self.client.get(reverse('articles:article_index'))
         self.assertQuerysetEqual(
             response.context['articles'],
             ['<Article: Test Article>']
@@ -42,7 +42,7 @@ class TestArticleDetail(TestCase):
                           title="Test Article")
         article.save()
 
-        url = reverse('articles:detail', args=(article.id,))
+        url = reverse('articles:article_detail', args=(article.id,))
         response = self.client.get(url)
 
         self.assertContains(response, article.title)
@@ -55,7 +55,7 @@ class TestArticleCreate(TestCase):
         """
         Test getting the create view form
         """
-        url = reverse('articles:create')
+        url = reverse('articles:article_create')
         response = self.client.get(url)
 
         self.assertContains(response, 'id="id_article_url"')

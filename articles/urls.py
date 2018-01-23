@@ -5,7 +5,10 @@ from . import views
 app_name = 'articles'
 
 urlpatterns = [
-    path('', views.IndexView.as_view(), name='index'),
-    path('create/', views.CreateView.as_view(), name='create'),
-    path('<int:pk>/', views.DetailView.as_view(), name='detail'),
+    path('', views.ArticleIndexView.as_view(), name='article_index'),
+    path('create/', views.ArticleCreateView.as_view(), name='article_create'),
+    path('<int:pk>/', views.ArticleDetailView.as_view(), name='article_detail'),
+    path('<int:pk>/create',
+         views.CommentCreateView.as_view(),
+         name='comment_create'),
 ]
