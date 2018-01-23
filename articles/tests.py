@@ -60,3 +60,19 @@ class TestArticleCreate(TestCase):
 
         self.assertContains(response, 'id="id_article_url"')
         self.assertContains(response, 'id="id_title"')
+
+
+class TestCommentCreate(TestCase):
+
+    def test_create(self):
+        """
+        Test getting the create view form
+        """
+        article = Article(article_url="https://fakewebsite.test",
+                          title="Test Article")
+        article.save()
+
+        url = reverse('articles:comment_create', args=(article.id,))
+        response = self.client.get(url)
+
+        self.assertContains(response, 'id="id_text"')
