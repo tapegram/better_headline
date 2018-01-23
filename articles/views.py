@@ -1,57 +1,40 @@
-from django.shortcuts import get_object_or_404
-from django.views import generic
-from django.urls import reverse
+from rest_framework import generics, mixins, status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from .models import (
     Article,
-    Comment,
+)
+from .serializers import (
+    ArticleSerializer,
 )
 
 
-class ArticleIndexView(generic.ListView):
-    template_name = 'articles/index.html'
-    context_object_name = 'articles'
+class ArticleList(mixins.ListModelMixin,
+                  mixins.CreateModelMixin,
+                  generics.GenericAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
 
-    def get_queryset(self):
-        return Article.objects.all()
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
-
-class ArticleCreateView(generic.CreateView):
-    model = Article
-    fields = ['article_url',
-              'title']
-    template_name = 'articles/create.html'
-
-    def get_success_url(self):
-        return reverse('articles:article_detail',
-                       args=(self.object.id,))
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 
-class ArticleDetailView(generic.DetailView):
-    model = Article
-    template_name = 'articles/detail.html'
+class ArticleDetail(mixins.RetrieveModelMixin,
+                    mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin,
+                    generics.GenericAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
 
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
 
-class CommentCreateView(generic.CreateView):
-    model = Comment
-    fields = ['text']
-    template_name = 'articles/comments/create.html'
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
 
-    def get_success_url(self):
-        return reverse('articles:article_detail',
-                       args=(self.object.article_id,))
-
-    def dispatch(self, request, *args, **kwargs):
-            """
-            Overridden so we can make sure the `Article` instance exists
-            before going any further.
-            """
-            self.article = get_object_or_404(Article, pk=kwargs['pk'])
-            return super().dispatch(request, *args, **kwargs)
-
-    def form_valid(self, form):
-        """
-        Overridden to add the Article relation to the `Comment` instance.
-        """
-        form.instance.article = self.article
-        return super().form_valid(form)
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
