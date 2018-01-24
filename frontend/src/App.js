@@ -14,9 +14,9 @@ class App extends Component {
 
     onClick(ev) {
         console.log("Sending a GET API Call !!!");
-        axios.get('/articles')
+        axios.get('http://127.0.0.1:8000/articles/')
             .then(res => {
-                console.log(res.json);
+                console.log(res);
             }).then(response => {
                 console.log(JSON.stringify(response));
             });
