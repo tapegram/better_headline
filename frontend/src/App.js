@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
-import ItemExampleHeaders from './articles/article_item';
 
 
 class App extends Component {
@@ -10,7 +9,6 @@ class App extends Component {
         return (
                 <div>
                 <button type="button" onClick={this.onClick}>Send GET /articles </button>
-                <ItemExampleHeaders />
                 </div>
         );
     }
