@@ -7,6 +7,7 @@ const Article = ({ onClick, articleUrl, title }) => (
     <Item>
         <Item.Content verticalAlign='middle'>
             <Item.Header as='a'> {title} </Item.Header>
+            <Item.Description>{articleUrl}</Item.Description>
         </Item.Content>
     </Item>
 );

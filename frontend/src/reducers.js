@@ -1,19 +1,37 @@
 import { combineReducers } from 'redux';
 import {
     ADD_ARTICLE,
+    RECEIVE_ARTICLES,
+    REQUEST_ARTICLES,
 } from './actions';
 
 
-function articles(state = [], action) {
+function articles(
+    state = [],
+    action
+) {
     switch (action.type) {
     case ADD_ARTICLE:
         return [
             ...state,
             {
-                article_url: action.text,
+                id: 1,
+                articleUrl: action.url,
                 title: action.title
             }
         ];
+    case REQUEST_ARTICLES:
+        return Object.assign({}, state, {
+            isFetching: true,
+            didInvalidate: false
+        });
+    case RECEIVE_ARTICLES:
+        return Object.assign({}, state, {
+            isFetching: false,
+            didInvalidate: false,
+            articles: action.articles,
+            lastUpdated: action.receivedAt
+        });
     default:
         return state;
     }

@@ -14,7 +14,7 @@ ArticleList.propTypes = {
     articles: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.number.isRequired,
-            article_url: PropTypes.string.isRequired,
+            articleUrl: PropTypes.string.isRequired,
             title: PropTypes.string.isRequired
         }).isRequired
     ).isRequired,

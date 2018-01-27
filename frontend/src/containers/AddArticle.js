@@ -3,24 +3,38 @@ import { connect } from 'react-redux';
 import { addArticle } from '../actions';
 
 let AddArticle = ({ dispatch }) => {
-    let input;
+    let article_url;
+    let article_title;
 
     return (
             <div>
             <form
                 onSubmit={e => {
                     e.preventDefault();
-                    if (!input.value.trim()) {
+
+                    if (!article_url.value.trim()) {
                         return;
                     }
-                    dispatch(addArticle(input.value));
-                    input.value = '';
+                    if (!article_title.value.trim()) {
+                        return;
+                    }
+
+                    dispatch(addArticle(article_url.value,
+                                        article_title.value));
+
+                    article_url.value = '';
+                    article_title.value = '';
                 }}
             >
             <input
                 ref={node => {
-                    input = node;
+                    article_url = node;
                 }}
+            />
+                <input
+            ref={node => {
+                article_title = node;
+            }}
             />
             <button type="submit">
                 Add Article
