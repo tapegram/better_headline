@@ -7,19 +7,20 @@ import {
 
 
 function articles(
-    state = [],
+    state = {
+        articles: []
+    },
     action
 ) {
     switch (action.type) {
     case ADD_ARTICLE:
-        return [
-            ...state,
-            {
+        return Object.assign({}, state, {
+            articles: state.articles.concat({
                 id: 1,
                 articleUrl: action.url,
                 title: action.title
-            }
-        ];
+            })
+        });
     case REQUEST_ARTICLES:
         return Object.assign({}, state, {
             isFetching: true,
@@ -34,7 +35,7 @@ function articles(
         });
     default:
         return state;
-    }
+        }
 }
 
 const articlesApp = combineReducers({

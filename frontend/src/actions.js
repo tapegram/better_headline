@@ -1,3 +1,6 @@
+import fetch from 'cross-fetch';
+
+
 /*
  * action types
  */
@@ -28,9 +31,31 @@ function requestArticles() {
 }
 
 function receiveArticles(json) {
+    let articlesList = json;
     return {
         type: RECEIVE_ARTICLES,
-        articles: json.data.children.map(child => child.data),
+        articles: articlesList.map(
+            function(article) {
+                return {
+                    id: 1,
+                    articleUrl: article['article_url'],
+                    title: article['title']
+                };
+            }),
         receivedAt: Date.now()
     };
+}
+
+export function fetchArticles() {
+  return function (dispatch) {
+    dispatch(requestArticles());
+    return fetch('http://127.0.0.1:8000/articles/')
+        .then(
+            response => response.json(),
+            error => console.log('An error occurred.', error)
+        )
+        .then(json =>
+            dispatch(receiveArticles(json))
+        );
+  };
 }

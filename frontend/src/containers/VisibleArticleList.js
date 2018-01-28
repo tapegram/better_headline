@@ -5,7 +5,7 @@ import ArticleList from '../components/ArticleList';
 
 const mapStateToProps = state => {
     return {
-        articles: state.articles
+        articles: state.articles.articles
     };
 };
 
