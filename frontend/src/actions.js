@@ -14,6 +14,28 @@ export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES';
  * action creators
  */
 
+function convertArticleListToMap(articles){
+    let article_map = {};
+
+    articles.forEach(function(article) {
+        const id = article['id'];
+        const articleUrl = article['article_url'];
+        const title = article['title'];
+
+        article_map[id] = {
+            id: id,
+            articleUrl: articleUrl,
+            title: title
+        };
+    });
+
+    return article_map;
+}
+
+function convertArticleListToIDs(articles){
+    return articles.map(article => article['id']);
+}
+
 export function addArticle(url, title) {
     return { type: ADD_ARTICLE,
              url: url,
@@ -34,14 +56,8 @@ function receiveArticles(json) {
     let articlesList = json;
     return {
         type: RECEIVE_ARTICLES,
-        articles: articlesList.map(
-            function(article) {
-                return {
-                    id: 1,
-                    articleUrl: article['article_url'],
-                    title: article['title']
-                };
-            }),
+        article_ids: convertArticleListToIDs(articlesList),
+        articles: convertArticleListToMap(articlesList),
         receivedAt: Date.now()
     };
 }

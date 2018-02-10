@@ -8,18 +8,17 @@ import {
 
 function articles(
     state = {
-        articles: []
+        articles: {}
     },
     action
 ) {
     switch (action.type) {
     case ADD_ARTICLE:
         return Object.assign({}, state, {
-            articles: state.articles.concat({
-                id: 1,
-                articleUrl: action.url,
-                title: action.title
-            })
+            articles: state.articles.set(1,
+                                         {id: 1,
+                                          articleUrl: action.url,
+                                          title: action.title})
         });
     case REQUEST_ARTICLES:
         return Object.assign({}, state, {
@@ -30,6 +29,7 @@ function articles(
         return Object.assign({}, state, {
             isFetching: false,
             didInvalidate: false,
+            article_ids: action.article_ids,
             articles: action.articles,
             lastUpdated: action.receivedAt
         });
