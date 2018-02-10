@@ -3,6 +3,8 @@ import {
     ADD_ARTICLE,
     RECEIVE_ARTICLES,
     REQUEST_ARTICLES,
+    CREATE_ARTICLE,
+    CREATE_ARTICLE_SUCCESS,
 } from './actions';
 
 
@@ -33,6 +35,22 @@ function articles(
             articles: action.articles,
             lastUpdated: action.receivedAt
         });
+    case CREATE_ARTICLE:
+        return Object.assign({}, state, {
+            isCreatingArticle: true
+        });
+    case CREATE_ARTICLE_SUCCESS:
+        const article_id = action.id;
+        return Object.assign({}, state, {
+            isCreatingArticle: false,
+            article_ids: state.article_ids.concat(action.id),
+            articles: Object.assign({}, state.articles, {
+                article_id: {
+                    id: article_id,
+                    articleUrl: action.url,
+                    title: action.title
+                }})
+            });
     default:
         return state;
         }

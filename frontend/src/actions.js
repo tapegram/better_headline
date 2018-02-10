@@ -9,6 +9,8 @@ export const ADD_ARTICLE = 'ADD_ARTICLE';
 export const VIEW_ARTICLE_DETAIL = 'VIEW_ARTICLE_DETAIL';
 export const REQUEST_ARTICLES = 'REQUEST_ARTICLES';
 export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES';
+export const CREATE_ARTICLE = 'CREATE_ARTICLE';
+export const CREATE_ARTICLE_SUCCESS = 'CREATE_ARTICLE_SUCCESS';
 
 /*
  * action creators
@@ -46,6 +48,21 @@ export function viewArticleDetail(index) {
     return { type: VIEW_ARTICLE_DETAIL, index };
 }
 
+function createArticle() {
+    return {
+        type: CREATE_ARTICLE
+    };
+}
+
+function createArticleSuccess(json) {
+    return {
+        type: CREATE_ARTICLE_SUCCESS,
+        id: json['id'],
+        url: json['article_url'],
+        title: json['title']
+    };
+}
+
 function requestArticles() {
     return {
         type: REQUEST_ARTICLES
@@ -74,4 +91,28 @@ export function fetchArticles() {
             dispatch(receiveArticles(json))
         );
   };
+}
+
+export function postArticle(url, title) {
+    const data = {
+        article_url: url,
+        title: title
+    };
+
+    return function(dispatch) {
+        dispatch(createArticle());
+        return fetch('http://127.0.0.1:8000/articles/', {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(
+            response => response.json(),
+            error => console.log('An error occurred.', error)
+          )
+          .then(json =>
+            dispatch(createArticleSuccess(json))
+          );
+    };
 }

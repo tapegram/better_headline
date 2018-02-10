@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addArticle } from '../actions';
+import { postArticle } from '../actions';
 
 let AddArticle = ({ dispatch }) => {
     let article_url;
@@ -19,8 +19,8 @@ let AddArticle = ({ dispatch }) => {
                         return;
                     }
 
-                    dispatch(addArticle(article_url.value,
-                                        article_title.value));
+                    dispatch(postArticle(article_url.value,
+                                         article_title.value));
 
                     article_url.value = '';
                     article_title.value = '';
