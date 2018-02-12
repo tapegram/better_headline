@@ -10,7 +10,9 @@ class Article(models.Model):
 
 
 class Comment(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article,
+                                related_name='comments',
+                                on_delete=models.CASCADE)
     text = models.TextField()
 
     def __str__(self):
