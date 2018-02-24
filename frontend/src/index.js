@@ -5,7 +5,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { applyMiddleware, compose, createStore } from 'redux';
 import articleApp from './reducers';
-import App from './App';
+import Root from './components/Root';
 import { fetchArticles } from './actions';
 
 
@@ -21,9 +21,7 @@ let store = createStore(
     ));
 
 render(
-        <Provider store={store}>
-        <App />
-        </Provider>,
+    <Root store={store} />,
     document.getElementById('root')
 );
 
