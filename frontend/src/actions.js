@@ -11,6 +11,8 @@ export const REQUEST_ARTICLES = 'REQUEST_ARTICLES';
 export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES';
 export const CREATE_ARTICLE = 'CREATE_ARTICLE';
 export const CREATE_ARTICLE_SUCCESS = 'CREATE_ARTICLE_SUCCESS';
+export const CREATE_COMMENT = 'CREATE_COMMENT';
+export const CREATE_COMMENT_SUCCESS = 'CREATE_COMMENT_SUCCESS';
 
 /*
  * action creators
@@ -65,6 +67,22 @@ function createArticleSuccess(json) {
     };
 }
 
+function createComment() {
+    return {
+        type: CREATE_COMMENT
+    };
+}
+
+function createCommentSuccess(json) {
+    return {
+        type: CREATE_COMMENT_SUCCESS,
+        id: json['id'],
+        text: json['text'],
+        article: json['article']
+    };
+}
+
+
 function requestArticles() {
     return {
         type: REQUEST_ARTICLES
@@ -116,5 +134,29 @@ export function postArticle(url, title) {
           .then(json =>
             dispatch(createArticleSuccess(json))
           );
+    };
+}
+
+export function postComment(comment_text, article_id) {
+    const data = {
+        text: comment_text,
+        article: article_id
+    };
+
+    return function(dispatch) {
+        dispatch(createComment());
+        return fetch(`http://127.0.0.1:8000/articles/${article_id}/comments`, {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(
+            response => response.json(),
+            error => console.log('An error occurred.', error)
+        )
+            .then(json =>
+                  dispatch(createCommentSuccess(json))
+                 );
     };
 }

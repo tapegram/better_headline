@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import AddComment from '../containers/AddComment';
 
 const ArticleDetail = ({ article }) => (
     <div>
@@ -10,6 +11,7 @@ const ArticleDetail = ({ article }) => (
         </ul>
         <br />
 
+        <AddComment />
         <ul>
             {article.comments.map((comment, index) => (
                     <li> {comment} </li>
