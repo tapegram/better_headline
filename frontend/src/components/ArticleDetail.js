@@ -11,7 +11,7 @@ const ArticleDetail = ({ article }) => (
         </ul>
         <br />
 
-        <AddComment />
+        <AddComment article={article.id}/>
         <ul>
             {article.comments.map((comment, index) => (
                     <li> {comment} </li>

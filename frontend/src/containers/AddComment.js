@@ -2,9 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { postComment } from '../actions';
 
-let AddComment = ({ dispatch }) => {
+let AddComment = ({ dispatch, article }) => {
     let comment_text;
-    let article_id;
 
     return (
             <div>
@@ -15,25 +14,16 @@ let AddComment = ({ dispatch }) => {
                     if (!comment_text.value.trim()) {
                         return;
                     }
-                    if (!article_id.value.trim()) {
-                        return;
-                    }
 
                     dispatch(postComment(comment_text.value,
-                                         article_id.value));
+                                         article));
 
                     comment_text.value = '';
-                    article_id.value = '';
                 }}
             >
             <input
                 ref={node => {
                     comment_text = node;
-                }}
-            />
-            <input
-                ref={node => {
-                    article_id = node;
                 }}
             />
             <button type="submit">
