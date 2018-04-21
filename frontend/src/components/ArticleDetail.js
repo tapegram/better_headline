@@ -14,7 +14,11 @@ const ArticleDetail = ({ article }) => (
         <AddComment article={article.id}/>
         <ul>
             {article.comments.map((comment, index) => (
-                    <li> {comment} </li>
+                <ul>
+                    <li> {comment.id} </li>
+                    <li> {comment.text} </li>
+                    <li> {comment.article} </li>
+                </ul>
             ))}
         </ul>
     </div>
@@ -27,7 +31,9 @@ ArticleDetail.propTypes = {
         title: PropTypes.string.isRequired,
         comments: PropTypes.arrayOf(
             PropTypes.shape({
-                text: PropTypes.string.isRequired
+                text: PropTypes.string.isRequired,
+                id: PropTypes.number.isRequired,
+                article: PropTypes.number.isRequired
             }).isRequired
         ).isRequired
     }).isRequired

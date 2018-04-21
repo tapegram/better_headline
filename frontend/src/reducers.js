@@ -59,16 +59,21 @@ function articles(
         });
     case CREATE_COMMENT_SUCCESS:
         const article = action.article;
-        const comment_text = action.text;
         const existing_article = state.articles[article];
+        const new_comment = {
+            id: action.id,
+            text: action.text,
+            article: action.article
+        };
 
         return {
             ...state,
+            isCreatingComment: false,
             articles: {
                 ...state.articles,
                 [article]: {
                     ...state.articles[article],
-                    comments: existing_article.comments.concat(comment_text)
+                    comments: existing_article.comments.concat(new_comment)
                 }
             }
         };
