@@ -5,6 +5,8 @@ import {
     REQUEST_ARTICLES,
     CREATE_ARTICLE,
     CREATE_ARTICLE_SUCCESS,
+    CREATE_COMMENT,
+    CREATE_COMMENT_SUCCESS,
 } from './actions';
 
 
@@ -51,6 +53,25 @@ function articles(
                     title: action.title
                 }})
             });
+    case CREATE_COMMENT:
+        return Object.assign({}, state, {
+            isCreatingComment: true
+        });
+    case CREATE_COMMENT_SUCCESS:
+        const article = action.article;
+        const comment_text = action.text;
+        const existing_article = state.articles[article];
+
+        return {
+            ...state,
+            articles: {
+                ...state.articles,
+                [article]: {
+                    ...state.articles[article],
+                    comments: existing_article.comments.concat(comment_text)
+                }
+            }
+        };
     default:
         return state;
         }
