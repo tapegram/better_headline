@@ -1,5 +1,7 @@
-from django.urls import path
-
+from django.urls import (
+    include,
+    path,
+)
 from . import views
 
 app_name = 'articles'
@@ -13,4 +15,6 @@ urlpatterns = [
          views.CommentList.as_view()),
     path('<int:article_id>/comments/<int:pk>',
          views.CommentDetail.as_view()),
+    path('rest-auth/',
+         include('rest_auth.urls')),
 ]
