@@ -160,3 +160,7 @@ export function postComment(comment_text, article_id) {
                  );
     };
 }
+
+export function postLogin(email, password) {
+    return;
+}

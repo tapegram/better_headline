@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import generics, mixins, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import authentication, permissions
 
 from .models import (
     Article,

@@ -4,12 +4,14 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import App from '../App';
 import ArticleDetailContainer from '../containers/ArticleDetailContainer';
+import LoginContainer from '../containers/LoginContainer';
 
 
 const Root = ({ store }) => (
         <Provider store={store}>
         <Router>
         <div>
+            <Route exact path="/" component={LoginContainer} />
             <Route exact path="/articles" component={App} />
             <Route path="/articles/:id" component={ArticleDetailContainer} />
         </div>
