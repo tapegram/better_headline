@@ -35,6 +35,9 @@ function articles(
             didInvalidate: false,
             article_ids: action.article_ids,
             articles: action.articles,
+            comment_ids: action.comment_ids,
+            comments: action.comments,
+            article_id_to_comment_id: action.article_id_to_comment_id,
             lastUpdated: action.receivedAt
         });
     case CREATE_ARTICLE:

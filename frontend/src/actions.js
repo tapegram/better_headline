@@ -42,6 +42,69 @@ function convertArticleListToIDs(articles){
     return articles.map(article => article['id']);
 }
 
+function getCommentsMapFromArticleList(articles){
+    let comment_map = {};
+
+    articles.forEach(function(article) {
+        const comments = article['comments'];
+        if (comments) {
+            comments.forEach(function(comment) {
+                const id = comment['id'];
+                const articleID = comment['article'];
+                const text = comment['text'];
+
+                comment_map[id] = {
+                    id: id,
+                    article: articleID,
+                    text: text
+                };
+            });
+        }
+    });
+
+    return comment_map;
+}
+
+function getArticleIDToCommentIDMapFromArticleList(articles){
+    let map = {};
+
+    articles.forEach(function(article) {
+        const article_id = article.id;
+        const comments = article['comments'];
+
+        if (comments) {
+            comments.forEach(function(comment) {
+                const comment_id = comment['id'];
+
+                if (article_id in map) {
+                    map[article_id] = map[article_id].concat(comment_id);
+                }
+                else {
+                    map[article_id] = [comment_id];
+                }
+            });
+        }
+    });
+
+    return map;
+}
+
+function getCommentIDsFromArticleList(articles){
+    const commentList = [];
+
+    articles.forEach(function(article) {
+        const comments = article['comments'];
+        if (comments) {
+            comments.forEach(function(comment) {
+                const id = comment['id'];
+                commentList.push(id);
+            });
+        }
+    });
+
+    return commentList;
+}
+
 export function addArticle(url, title) {
     return { type: ADD_ARTICLE,
              url: url,
@@ -95,6 +158,9 @@ function receiveArticles(json) {
         type: RECEIVE_ARTICLES,
         article_ids: convertArticleListToIDs(articlesList),
         articles: convertArticleListToMap(articlesList),
+        comments: getCommentsMapFromArticleList(articlesList),
+        comment_ids: getCommentIDsFromArticleList(articlesList),
+        article_id_to_comment_id: getArticleIDToCommentIDMapFromArticleList(articlesList),
         receivedAt: Date.now()
     };
 }
