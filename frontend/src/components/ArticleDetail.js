@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AddComment from '../containers/AddComment';
 
-const ArticleDetail = ({ article }) => (
+const ArticleDetail = ({ article, comments }) => (
     <div>
         <ul>
             <li> {article.id} </li>
@@ -13,7 +13,7 @@ const ArticleDetail = ({ article }) => (
 
         <AddComment article={article.id}/>
         <ul>
-            {article.comments.map((comment, index) => (
+            {comments.map((comment, index) => (
                 <ul>
                     <li> {comment.id} </li>
                     <li> {comment.text} </li>

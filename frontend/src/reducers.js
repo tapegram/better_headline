@@ -78,6 +78,21 @@ function articles(
                     ...state.articles[article],
                     comments: existing_article.comments.concat(new_comment)
                 }
+            },
+            comment_ids: [
+                ...state.comment_ids,
+                new_comment.id
+            ],
+            comments: {
+                ...state.comments,
+                [new_comment.id]: new_comment
+            },
+            article_id_to_comment_id: {
+                ...state.article_id_to_comment_id,
+                [article]: [
+                    ...state.article_id_to_comment_id[article],
+                    new_comment.id
+                ]
             }
         };
     default:
