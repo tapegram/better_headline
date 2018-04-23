@@ -72,13 +72,6 @@ function articles(
         return {
             ...state,
             isCreatingComment: false,
-            articles: {
-                ...state.articles,
-                [article]: {
-                    ...state.articles[article],
-                    comments: existing_article.comments.concat(new_comment)
-                }
-            },
             comment_ids: [
                 ...state.comment_ids,
                 new_comment.id

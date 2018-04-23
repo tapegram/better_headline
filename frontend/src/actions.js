@@ -25,13 +25,11 @@ function convertArticleListToMap(articles){
         const id = article['id'];
         const articleUrl = article['article_url'];
         const title = article['title'];
-        const comments = article['comments'];
 
         article_map[id] = {
             id: id,
             articleUrl: articleUrl,
-            title: title,
-            comments: comments
+            title: title
         };
     });
 
